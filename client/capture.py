@@ -4,12 +4,14 @@ import mss
 import numpy as np
 import cv2
 import time
+import ctypes
+ctypes.windll.user32.SetProcessDPIAware()
 
 _thread_local = threading.local()
 
 
 class ScreenCapture:
-    def __init__(self, fps: int = 15, resize_scale: float = 0.5):
+    def __init__(self, fps: int = 25, resize_scale: float = 1.0):
         self.fps = fps
         self.resize_scale = resize_scale
         self.frame_duration = 1.0 / fps
@@ -31,7 +33,7 @@ class ScreenCapture:
         if self.resize_scale != 1.0:
             w = int(frame.shape[1] * self.resize_scale)
             h = int(frame.shape[0] * self.resize_scale)
-            frame = cv2.resize(frame, (w, h), interpolation=cv2.INTER_AREA)
+            frame = cv2.resize(frame, (w, h), interpolation=cv2.INTER_LINEAR)
         elapsed = time.time() - start
         sleep_time = self.frame_duration - elapsed
         if sleep_time > 0:

@@ -10,6 +10,7 @@ import queue
 import threading
 import tkinter as tk
 from tkinter import messagebox
+from turtle import title
 import cv2
 import requests
 
@@ -18,7 +19,7 @@ from webrtc import WebRTCViewer
 HTTP_URL = "http://localhost:8000"
 WS_URL = "ws://localhost:8000"
 
-VIDEO_POLL_MS = 30   # how often the GUI polls for a new frame (~33 fps)
+VIDEO_POLL_MS = 16   # how often the GUI polls for a new frame (~33 fps)
 
 
 class ViewerApp(tk.Tk):
@@ -103,7 +104,7 @@ class ViewerApp(tk.Tk):
                  text="Video will open in a separate window. Press 'q' in it to close.",
                  font=("Segoe UI", 8), bg=BG, fg="#6c7086").pack(pady=(0, 14))
 
-        self.geometry("420x300")
+        self.geometry("700x660")
 
     # ── Helpers ──────────────────────────────────────────────
 
@@ -140,7 +141,13 @@ class ViewerApp(tk.Tk):
             try:
                 img = self._viewer.frame_queue.get_nowait()
                 title = f"Screen Share — {self._session_id_for_window}"
+                if not self._window_open:
+                    cv2.namedWindow(title, cv2.WINDOW_NORMAL)
+                    cv2.resizeWindow(title, 1440, 810)  # Initial size
+                    self._window_open = True
                 cv2.imshow(title, img)
+                # cv2.namedWindow(title, cv2.WINDOW_NORMAL)
+                # cv2.resizeWindow(title, 1600, 900)
                 cv2.waitKey(1)
                 self._window_open = True
             except queue.Empty:

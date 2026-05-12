@@ -35,7 +35,7 @@ class SenderApp(tk.Tk):
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
     # ── UI construction ──────────────────────────────────────
-
+ 
     def _build_ui(self):
         PAD = {"padx": 18, "pady": 10}
         BG = "#1e1e2e"
@@ -56,14 +56,14 @@ class SenderApp(tk.Tk):
 
         # ── Password frame ──
         pw_frame = tk.Frame(self, bg=PANEL, padx=16, pady=12)
-        pw_frame.pack(fill="x", padx=20, pady=(0, 10))
+        pw_frame.pack(fill="x", padx=20, pady=(0, 8))
 
         tk.Label(pw_frame, text="Session Password (optional):",
                  font=FONT, bg=PANEL, fg=FG).grid(row=0, column=0, sticky="w")
 
         self._pw_var = tk.StringVar()
         pw_entry = tk.Entry(pw_frame, textvariable=self._pw_var,
-                            show="●", font=FONT, width=22,
+                            show="●", font=FONT, width=12,
                             bg="#45475a", fg=FG, insertbackground=FG,
                             relief="flat", bd=4)
         pw_entry.grid(row=0, column=1, padx=(10, 0))
@@ -123,7 +123,7 @@ class SenderApp(tk.Tk):
         tk.Label(self, text="Viewer must have the session ID to connect.",
                  font=("Segoe UI", 8), bg=BG, fg="#6c7086").pack(pady=(0, 14))
 
-        self.geometry("420x380")
+        self.geometry("700x660")
 
     # ── Actions ─────────────────────────────────────────────
 

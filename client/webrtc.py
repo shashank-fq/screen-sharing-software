@@ -4,7 +4,7 @@ import json
 import queue
 import websockets
 import cv2
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceCandidate
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceCandidate, RTCConfiguration, RTCIceServer
 from av import VideoFrame
 from capture import ScreenCapture
 
@@ -15,7 +15,7 @@ RECONNECT_BACKOFF_BASE = 2
 class ScreenStreamTrack(VideoStreamTrack):
     def __init__(self):
         super().__init__()
-        self.capture = ScreenCapture(fps=15, resize_scale=0.5)
+        self.capture = ScreenCapture(fps=30, resize_scale=1.0)
 
     async def recv(self):
         pts, time_base = await self.next_timestamp()
@@ -45,7 +45,14 @@ class WebRTCSession:
         return url
 
     def _create_peer_connection(self):
-        self.pc = RTCPeerConnection()
+        config = RTCConfiguration(
+            iceServers=[
+                RTCIceServer(
+                    urls=["stun:stun.l.google.com:19302"]
+                )
+            ]
+        )
+        self.pc = RTCPeerConnection(configuration=config)
 
         @self.pc.on("connectionstatechange")
         async def on_state():
