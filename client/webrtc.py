@@ -49,6 +49,12 @@ class WebRTCSession:
             iceServers=[
                 RTCIceServer(
                     urls=["stun:stun.l.google.com:19302"]
+                ),
+
+                RTCIceServer(
+                    urls=["turn:turn.shashankfq.app:3478"],
+                    username="shask",
+                    credential="12321"
                 )
             ]
         )

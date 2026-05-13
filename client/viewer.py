@@ -16,8 +16,8 @@ import requests
 
 from webrtc import WebRTCViewer
 
-HTTP_URL = "http://localhost:8000"
-WS_URL = "ws://localhost:8000"
+HTTP_URL = "https://signal.shashankfq.app"
+WS_URL = "wss://signal.shashankfq.app"
 
 VIDEO_POLL_MS = 16   # how often the GUI polls for a new frame (~33 fps)
 

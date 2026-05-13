@@ -11,6 +11,10 @@ from pydantic import BaseModel
 
 app = FastAPI(title="Screen Share Signaling Server")
 
+@app.get("/")
+async def root():
+    return {"status": "running"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,7 +39,6 @@ def _hash_password(password: str) -> str:
 
 class CreateSessionRequest(BaseModel):
     password: Optional[str] = None
-
 
 @app.post("/create-session")
 async def create_session(body: CreateSessionRequest = CreateSessionRequest()):
@@ -156,5 +159,5 @@ async def _schedule_session_cleanup(session_id: str):
         print(f"[{session_id}] Session expired and removed.")
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)

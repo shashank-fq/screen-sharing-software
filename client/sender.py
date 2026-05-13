@@ -12,8 +12,8 @@ import requests
 
 from webrtc import WebRTCSender
 
-HTTP_URL = "http://localhost:8000"
-WS_URL = "ws://localhost:8000"
+HTTP_URL = "https://signal.shashankfq.app"
+WS_URL = "wss://signal.shashankfq.app"
 
 
 class SenderApp(tk.Tk):
